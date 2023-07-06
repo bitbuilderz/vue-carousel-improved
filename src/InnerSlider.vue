@@ -329,7 +329,7 @@ export default {
       // sometimes this method triggered after scroll on mobiles. It produces unwanted animation reset. Here is a fix.
       if (
         !(this.$refs.track && this.$refs.track.$el) ||
-        diffInMilliseconds < 1000
+        (diffInMilliseconds > 0 && diffInMilliseconds < 1000)
       ) {
         return;
       }
