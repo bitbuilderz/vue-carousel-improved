@@ -22,7 +22,7 @@
     "test:unit:watch": "vue-cli-service test:unit --watch",
     "release": "semantic-release --no-ci"
   },
-  "main": "dist/vue-slick-carousel.umd.js",
+  "main": "dist/vue-carousel-improved.umd.js",
   "dependencies": {
     "enquire.js": "2.1.6",
     "json2mq": "0.2.0",
@@ -83,7 +83,7 @@
       "target": "dist/bit"
     },
     "overrides": {
-      "vue-slick-carousel-theme": {
+      "vue-carousel-improved-theme": {
         "env": {
           "compiler": "-"
         }

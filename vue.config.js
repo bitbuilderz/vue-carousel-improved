@@ -40,7 +40,7 @@ module.exports = {
       new CopyWebpackPlugin([
         {
           from: path.join(__dirname, 'src/slick-theme.css'),
-          to: path.join(__dirname, 'dist/vue-slick-carousel-theme.css'),
+          to: path.join(__dirname, 'dist/vue-carousel-improved-theme.css'),
         },
       ]),
     ],
