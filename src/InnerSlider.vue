@@ -315,6 +315,7 @@ export default {
       );
       this.debouncedResize();
     },
+    // eslint-disable-next-line no-unused-vars
     resizeWindow(setTrackStyle = true) {
       return;
       // if (!(this.$refs.track && this.$refs.track.$el)) {
