@@ -119,11 +119,9 @@ export default {
     if (window.addEventListener) {
       window.addEventListener('resize', this.onWindowResized);
       window.addEventListener('scroll', this.setLastScrolled);
-      window.addEventListener('orientationchange', this.orientationChanged);
     } else {
       window.attachEvent('onresize', this.onWindowResized);
       window.attachEvent('onscroll', this.setLastScrolled);
-      window.attachEvent('onorientationchange', this.orientationChanged);
     }
   },
   updated() {
@@ -156,11 +154,9 @@ export default {
     if (window.addEventListener) {
       window.removeEventListener('resize', this.onWindowResized);
       window.removeEventListener('scroll', this.setLastScrolled);
-      window.removeEventListener('orientationchange', this.orientationChanged);
     } else {
       window.detachEvent('onresize', this.onWindowResized);
       window.detachEvent('onscroll', this.setLastScrolled);
-      window.detachEvent('onorientationchange', this.orientationChanged);
     }
     if (this.autoplayTimer) {
       clearInterval(this.autoplayTimer);
@@ -337,10 +333,6 @@ export default {
       ) {
         return;
       }
-      const text = `resizeWindow, ${diffInMilliseconds}`;
-      const element = document.getElementsByTagName('body');
-      const textNode = document.createTextNode(text);
-      element.appendChild(textNode);
       let spec = {
         listRef: this.$refs.list,
         trackRef: this.$refs.track,
@@ -349,33 +341,6 @@ export default {
         ...this.$data,
       };
       this.updateState(spec, setTrackStyle);
-      if (this.autoplay) {
-        this.autoPlay('update');
-      } else {
-        this.pause('paused');
-      }
-      // animating state should be cleared while resizing, otherwise autoplay stops working
-      this.animating = false;
-      clearTimeout(this.animationEndCallback);
-      // delete this.animationEndCallback
-      this.animationEndCallback = undefined;
-    },
-    orientationChanged() {
-      if (!(this.$refs.track && this.$refs.track.$el)) {
-        return;
-      }
-      const text = 'orientationChanged';
-      const element = document.getElementsByTagName('body');
-      const textNode = document.createTextNode(text);
-      element.appendChild(textNode);
-      let spec = {
-        listRef: this.$refs.list,
-        trackRef: this.$refs.track,
-        children: this.$slots.default,
-        ...this.$props,
-        ...this.$data,
-      };
-      this.updateState(spec, true);
       if (this.autoplay) {
         this.autoPlay('update');
       } else {
@@ -633,10 +598,6 @@ export default {
       }
     },
     setLastScrolled() {
-      const text = `setLastScrolled`;
-      const element = document.getElementsByTagName('body');
-      const textNode = document.createTextNode(text);
-      element.appendChild(textNode);
       this.lastScrolled = Date.now();
     },
   },
