@@ -125,7 +125,7 @@ export default {
     }
     if (window?.screen?.orientation?.addEventListener) {
       window.screen.orientation.addEventListener(
-        'scroll',
+        'change',
         this.onWindowResized,
       );
     }
@@ -166,7 +166,7 @@ export default {
     }
     if (window?.screen?.orientation?.removeEventListener) {
       window.screen.orientation.removeEventListener(
-        'scroll',
+        'change',
         this.onWindowResized,
       );
     }
