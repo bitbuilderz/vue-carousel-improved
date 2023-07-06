@@ -123,6 +123,7 @@ export default {
       window.attachEvent('onresize', this.onWindowResized);
       window.attachEvent('onscroll', this.setLastScrolled);
     }
+    window.screen.orientation.onchange = this.onWindowResized;
   },
   updated() {
     this.checkImagesLoad();
@@ -158,6 +159,7 @@ export default {
       window.detachEvent('onresize', this.onWindowResized);
       window.detachEvent('onscroll', this.setLastScrolled);
     }
+    window.screen.orientation.onchange = null;
     if (this.autoplayTimer) {
       clearInterval(this.autoplayTimer);
     }
@@ -325,32 +327,12 @@ export default {
     },
     // eslint-disable-next-line no-unused-vars
     resizeWindow(setTrackStyle = true) {
-      const diffInSeconds = (Date.now() - this.lastScrolled) / 1000;
+      const diffInMilliseconds = Date.now() - this.lastScrolled;
       // sometimes this method triggered after scroll on mobiles. It produces unwanted animation reset. Here is a fix.
-      if (!(this.$refs.track && this.$refs.track.$el) || diffInSeconds < 3) {
-        return;
-      }
-      let spec = {
-        listRef: this.$refs.list,
-        trackRef: this.$refs.track,
-        children: this.$slots.default,
-        ...this.$props,
-        ...this.$data,
-      };
-      this.updateState(spec, setTrackStyle);
-      if (this.autoplay) {
-        this.autoPlay('update');
-      } else {
-        this.pause('paused');
-      }
-      // animating state should be cleared while resizing, otherwise autoplay stops working
-      this.animating = false;
-      clearTimeout(this.animationEndCallback);
-      // delete this.animationEndCallback
-      this.animationEndCallback = undefined;
-    },
-    onOrientationChanged(setTrackStyle = true) {
-      if (!(this.$refs.track && this.$refs.track.$el)) {
+      if (
+        !(this.$refs.track && this.$refs.track.$el) ||
+        diffInMilliseconds < 1000
+      ) {
         return;
       }
       let spec = {
