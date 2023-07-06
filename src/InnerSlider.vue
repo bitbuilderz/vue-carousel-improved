@@ -123,7 +123,12 @@ export default {
       window.attachEvent('onresize', this.onWindowResized);
       window.attachEvent('onscroll', this.setLastScrolled);
     }
-    window.screen.orientation.onchange = this.onWindowResized;
+    if (window?.screen?.orientation?.addEventListener) {
+      window.screen.orientation.addEventListener(
+        'scroll',
+        this.onWindowResized,
+      );
+    }
   },
   updated() {
     this.checkImagesLoad();
@@ -159,7 +164,12 @@ export default {
       window.detachEvent('onresize', this.onWindowResized);
       window.detachEvent('onscroll', this.setLastScrolled);
     }
-    window.screen.orientation.onchange = null;
+    if (window?.screen?.orientation?.removeEventListener) {
+      window.screen.orientation.removeEventListener(
+        'scroll',
+        this.onWindowResized,
+      );
+    }
     if (this.autoplayTimer) {
       clearInterval(this.autoplayTimer);
     }
