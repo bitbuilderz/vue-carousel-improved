@@ -117,6 +117,8 @@ export default {
     } else {
       window.attachEvent('onresize', this.onWindowResized);
     }
+
+    ScreenOrientation.addEventListener('change', this.onOrientationChanged);
   },
   updated() {
     this.checkImagesLoad();
@@ -153,6 +155,8 @@ export default {
     if (this.autoplayTimer) {
       clearInterval(this.autoplayTimer);
     }
+
+    ScreenOrientation.removeEventListener('change', this.onOrientationChanged);
   },
   methods: {
     onPropsUpdated() {
@@ -339,6 +343,29 @@ export default {
       // clearTimeout(this.animationEndCallback);
       // // delete this.animationEndCallback
       // this.animationEndCallback = undefined;
+    },
+    onOrientationChanged() {
+      if (!(this.$refs.track && this.$refs.track.$el)) {
+        return;
+      }
+      let spec = {
+        listRef: this.$refs.list,
+        trackRef: this.$refs.track,
+        children: this.$slots.default,
+        ...this.$props,
+        ...this.$data,
+      };
+      this.updateState(spec, setTrackStyle);
+      if (this.autoplay) {
+        this.autoPlay('update');
+      } else {
+        this.pause('paused');
+      }
+      // animating state should be cleared while resizing, otherwise autoplay stops working
+      this.animating = false;
+      clearTimeout(this.animationEndCallback);
+      // delete this.animationEndCallback
+      this.animationEndCallback = undefined;
     },
     checkImagesLoad() {
       let images = this.$refs.list.querySelectorAll('.slick-slide img');
