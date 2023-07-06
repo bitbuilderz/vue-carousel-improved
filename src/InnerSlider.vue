@@ -160,9 +160,14 @@ export default {
     if (window.addEventListener) {
       window.removeEventListener('resize', this.onWindowResized);
       window.removeEventListener('scroll', this.setLastScrolled);
+      window.removeEventListener(
+        'orientationchange',
+        this.setLastOrientationChanged,
+      );
     } else {
       window.detachEvent('onresize', this.onWindowResized);
       window.detachEvent('onscroll', this.setLastScrolled);
+      window.detachEvent('onorientationchange', this.setLastOrientationChanged);
     }
     if (this.autoplayTimer) {
       clearInterval(this.autoplayTimer);
