@@ -119,15 +119,11 @@ export default {
     if (window.addEventListener) {
       window.addEventListener('resize', this.onWindowResized);
       window.addEventListener('scroll', this.setLastScrolled);
+      window.addEventListener('orientationchange', this.onWindowResized);
     } else {
       window.attachEvent('onresize', this.onWindowResized);
       window.attachEvent('onscroll', this.setLastScrolled);
-    }
-    if (window?.screen?.orientation?.addEventListener) {
-      window.screen.orientation.addEventListener(
-        'change',
-        this.onWindowResized,
-      );
+      window.attachEvent('onorientationchange', this.onWindowResized);
     }
   },
   updated() {
@@ -160,15 +156,11 @@ export default {
     if (window.addEventListener) {
       window.removeEventListener('resize', this.onWindowResized);
       window.removeEventListener('scroll', this.setLastScrolled);
+      window.removeEventListener('orientationchange', this.onWindowResized);
     } else {
       window.detachEvent('onresize', this.onWindowResized);
       window.detachEvent('onscroll', this.setLastScrolled);
-    }
-    if (window?.screen?.orientation?.removeEventListener) {
-      window.screen.orientation.removeEventListener(
-        'change',
-        this.onWindowResized,
-      );
+      window.detachEvent('onorientationchange', this.onWindowResized);
     }
     if (this.autoplayTimer) {
       clearInterval(this.autoplayTimer);
