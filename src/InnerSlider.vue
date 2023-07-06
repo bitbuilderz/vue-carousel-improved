@@ -605,7 +605,7 @@ export default {
     },
     setLastScrolled() {
       const diffInMilliseconds = Date.now() - this.lastOrientationChanged;
-      if (diffInMilliseconds < 1000) {
+      if (diffInMilliseconds > 0 && diffInMilliseconds < 1000) {
         return;
       }
       this.lastScrolled = Date.now();
