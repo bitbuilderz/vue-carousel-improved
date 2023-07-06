@@ -36,14 +36,14 @@ export const props = {
   variableWidth: { type: Boolean, default: false },
   vertical: { type: Boolean, default: false },
   waitForAnimate: { type: Boolean, default: true },
-}
+};
 
 export const defaultValues = Object.keys(props).reduce((acc, key) => {
-  acc[key] = props[key].default
-  return acc
-}, {})
+  acc[key] = props[key].default;
+  return acc;
+}, {});
 
 export const types = Object.keys(props).reduce((acc, key) => {
-  acc[key] = props[key].type
-  return acc
-}, {})
+  acc[key] = props[key].type;
+  return acc;
+}, {});
