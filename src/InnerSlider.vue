@@ -53,6 +53,7 @@ export default {
       ...initialState,
       currentSlide: this.initialSlide,
       lastScrolled: null,
+      lastOrientationChanged: null,
     };
   },
   computed: {
@@ -119,9 +120,14 @@ export default {
     if (window.addEventListener) {
       window.addEventListener('resize', this.onWindowResized);
       window.addEventListener('scroll', this.setLastScrolled);
+      window.addEventListener(
+        'orientationchange',
+        this.setLastOrientationChanged,
+      );
     } else {
       window.attachEvent('onresize', this.onWindowResized);
       window.attachEvent('onscroll', this.setLastScrolled);
+      window.attachEvent('onorientationchange', this.setLastOrientationChanged);
     }
   },
   updated() {
@@ -598,7 +604,14 @@ export default {
       }
     },
     setLastScrolled() {
+      const diffInMilliseconds = Date.now() - this.lastOrientationChanged;
+      if (diffInMilliseconds < 1000) {
+        return;
+      }
       this.lastScrolled = Date.now();
+    },
+    setLastOrientationChanged() {
+      this.lastOrientationChanged = Date.now();
     },
   },
   render() {
