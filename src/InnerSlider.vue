@@ -344,7 +344,7 @@ export default {
       // // delete this.animationEndCallback
       // this.animationEndCallback = undefined;
     },
-    onOrientationChanged() {
+    onOrientationChanged(setTrackStyle = true) {
       if (!(this.$refs.track && this.$refs.track.$el)) {
         return;
       }
