@@ -37,6 +37,7 @@
           </VueSlickCarousel>
         </v-col>
       </v-row>
+      <button @click="test">tit</button>
       <v-row
         v-if="config.asNavFor"
         align="center"
@@ -67,7 +68,7 @@
           </VueSlickCarousel>
         </v-col>
       </v-row>
-      <v-row class="pl-7 pr-7"><hr width="100%" /></v-row>
+      <v-row class="pl-7 pr-7"><hr width="100%"/></v-row>
       <v-row>
         <v-col sm="12" md="6" class="pa-7">
           <h2># Template</h2>
@@ -95,18 +96,18 @@
 </template>
 
 <script>
-import Prism from 'vue-prismjs'
-import enquire from 'enquire.js'
+import Prism from 'vue-prismjs';
+import enquire from 'enquire.js';
 
-import 'prismjs/themes/prism-tomorrow.css'
-import '@/slick-theme.css'
+import 'prismjs/themes/prism-tomorrow.css';
+import '@/slick-theme.css';
 
-import configs from './configs'
+import configs from './configs';
 
 const exampleVueTemplate = `<VueSlickCarousel v-bind="settings">
   <div><h3>1</h3></div>
   /*...*/
-</VueSlickCarousel>`
+</VueSlickCarousel>`;
 
 export default {
   name: 'ExamplesPage',
@@ -121,56 +122,66 @@ export default {
       const { min, max } =
         this.screen === 'mobile'
           ? { min: 50, max: 150 }
-          : { min: 200, max: 400 }
+          : { min: 200, max: 400 };
 
       return Array.from(
         { length: this.config.numSlides || 6 },
         () => Math.floor(Math.random() * (max - min)) + min,
-      )
+      );
     },
     template() {
-      return this.config.template ? this.config.template : exampleVueTemplate
+      return this.config.template ? this.config.template : exampleVueTemplate;
     },
     classes() {
-      const { asNavFor } = this.config
-      const { vertical, rows, adaptiveHeight } = this.config.settings
+      const { asNavFor } = this.config;
+      const { vertical, rows, adaptiveHeight } = this.config.settings;
 
       return {
         'short-row': vertical || rows > 1 || asNavFor,
         'adaptive-height': adaptiveHeight,
-      }
+      };
     },
   },
   data() {
-    const menu = Object.keys(configs).map(key => {
+    const menu = Object.keys(configs).map((key) => {
       return {
         title: configs[key].title,
         path: `/example/${key}`,
-      }
-    })
+      };
+    });
 
     return {
       tab: null,
       screen: 'mobile',
       menu,
-    }
+      sliderPageIndex: 0,
+    };
   },
   created() {
-    enquire.register('(min-width: 0px) and (max-width: 600px)', this.onMobile)
-    enquire.register('(min-width: 601px)', this.onDesktop)
+    enquire.register('(min-width: 0px) and (max-width: 600px)', this.onMobile);
+    enquire.register('(min-width: 601px)', this.onDesktop);
   },
   mounted() {
-    window.carousel = this.$refs.c1
+    window.carousel = this.$refs.c1;
   },
   methods: {
     onMobile() {
-      this.screen = 'mobile'
+      this.screen = 'mobile';
     },
     onDesktop() {
-      this.screen = 'desktop'
+      this.screen = 'desktop';
+    },
+    test() {
+      const minRandomNumber = 5;
+      const randomIndex = Math.floor(
+        Math.random() * (30 - minRandomNumber + 1) + minRandomNumber,
+      );
+      const randomIndexRes = this.sliderPageIndex + randomIndex;
+      this.sliderPageIndex = randomIndexRes > 30 ? 0 : randomIndexRes;
+      this.$refs.c1?.goTo(randomIndexRes);
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
