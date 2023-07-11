@@ -544,7 +544,7 @@ export const slideHandler = (spec) => {
       if (currentSlide > animationSlide) {
         animationSlide += currentSlide;
       } else if (animationSlide - currentSlide < 5) {
-        animationSlide += currentSlide / 2;
+        animationSlide += slideCount / 2;
       }
     }
     finalSlide = animationSlide;
