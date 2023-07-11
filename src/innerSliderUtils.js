@@ -514,6 +514,7 @@ export const slideHandler = (spec) => {
     slidesToScroll,
     slidesToShow,
     useCSS,
+    horizontalRoulette,
   } = spec;
   if (waitForAnimate && animating) return {};
   let animationSlide = index,
@@ -539,6 +540,13 @@ export const slideHandler = (spec) => {
     };
     nextState = { animating: false };
   } else {
+    if (horizontalRoulette) {
+      if (currentSlide > animationSlide) {
+        animationSlide += currentSlide;
+      } else if (animationSlide - currentSlide < 5) {
+        animationSlide += currentSlide / 2;
+      }
+    }
     finalSlide = animationSlide;
     if (animationSlide < 0) {
       finalSlide = animationSlide + slideCount;
@@ -549,19 +557,16 @@ export const slideHandler = (spec) => {
     } else if (!canGoNext(spec) && animationSlide > currentSlide) {
       animationSlide = finalSlide = currentSlide;
     } else if (centerMode && animationSlide >= slideCount) {
-      console.log(currentSlide, animationSlide);
-      if (infinite) {
-        if (currentSlide > animationSlide) {
-          animationSlide += currentSlide;
-        } else if (animationSlide - currentSlide < 5) {
-          animationSlide += 15;
-        }
+      if (horizontalRoulette) {
+        const animationSlideOffset = animationSlide - slideCount;
+        animationSlide = infinite
+          ? slideCount + animationSlideOffset
+          : slideCount - 1;
+        finalSlide = infinite ? animationSlideOffset : slideCount - 1;
+      } else {
+        animationSlide = infinite ? slideCount : slideCount - 1;
+        finalSlide = infinite ? 0 : slideCount - 1;
       }
-      const animationSlideOffset = animationSlide - slideCount;
-      animationSlide = infinite
-        ? slideCount + animationSlideOffset
-        : slideCount - 1;
-      finalSlide = infinite ? animationSlideOffset : slideCount - 1;
     } else if (animationSlide >= slideCount) {
       finalSlide = animationSlide - slideCount;
       if (!infinite) finalSlide = slideCount - slidesToShow;

@@ -52,6 +52,7 @@ export default {
       centerMode: true,
       pauseOnHover: false,
       speed: 3000,
+      horizontalRoulette: true,
     },
   },
   responsive: {
