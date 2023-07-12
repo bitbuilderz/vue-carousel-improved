@@ -514,7 +514,7 @@ export const slideHandler = (spec) => {
     slidesToScroll,
     slidesToShow,
     useCSS,
-    horizontalRoulette,
+    arbitraryRewind,
   } = spec;
   if (waitForAnimate && animating) return {};
   let animationSlide = index,
@@ -540,7 +540,7 @@ export const slideHandler = (spec) => {
     };
     nextState = { animating: false };
   } else {
-    if (horizontalRoulette) {
+    if (arbitraryRewind) {
       if (currentSlide > animationSlide) {
         animationSlide += currentSlide;
       } else if (animationSlide - currentSlide < 5) {
@@ -557,7 +557,7 @@ export const slideHandler = (spec) => {
     } else if (!canGoNext(spec) && animationSlide > currentSlide) {
       animationSlide = finalSlide = currentSlide;
     } else if (centerMode && animationSlide >= slideCount) {
-      if (horizontalRoulette) {
+      if (arbitraryRewind) {
         const animationSlideOffset = animationSlide - slideCount;
         animationSlide = infinite
           ? slideCount + animationSlideOffset

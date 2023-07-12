@@ -79,6 +79,7 @@ Check out [demo examples](https://gs-shop.github.io/vue-slick-carousel/#/example
 | variableWidth    | allows variable slide width                                                                                                                                                      | boolean | -                     | false        |
 | vertical         | enables vertical slide mode                                                                                                                                                      | boolean | -                     | false        |
 | waitForAnimate   | ignores events to move the slide while animating                                                                                                                                 | boolean | -                     | true         |
+| arbitraryRewind  | rewind to any slide                                                                                                                                                              | boolean | -                     | false        |
 
 ## Methods
 
