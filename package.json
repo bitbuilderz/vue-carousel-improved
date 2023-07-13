@@ -1,6 +1,6 @@
 {
   "name": "@bitbuilders/vue-carousel-improved",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Forked Vue Slick Carousel with active maintaining and fixed issues",
   "keywords": [
     "vue",
@@ -11,6 +11,10 @@
     "pwa",
     "nuxt"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bitbuilderz/vue-carousel-improved.git"
+  },
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve --open",
